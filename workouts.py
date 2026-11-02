@@ -12,6 +12,8 @@ naming
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-statements
 # pylint: disable=exec-used
+# pylint: disable=broad-exception-caught
+# xpylint: disable=bare-except,broad-exception-caught
 
 #std
 import calendar
@@ -777,7 +779,7 @@ def unique_route_report(df, event):
         #print(_newdf)
         #print(_newdf.fillna(''))
         #print(_newdf.fillna('').infer_objects(copy=False))
-        
+
         # deprecated _df = _newdf.fillna('').infer_objects(copy=False)
         _df = _newdf.fillna('').infer_objects()
 
@@ -974,7 +976,6 @@ def workout_operation(row, weights):
         date_str = f'{row["Year"]:04}/{row["Month"]:02}/{row["Day"]:02}'
         date = str(date_str)
     # just in case something is weird here
-    # pylint: disable=bare-except,broad-exception-caught
     except Exception as e:
         print(f"hey, exception! {e}")
         print (row)
