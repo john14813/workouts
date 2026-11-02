@@ -690,7 +690,8 @@ def event_report(df, event, rider=None, threshold=0):
     # HEREHERE 365 should not be hard-coded, check the df?
     print(f"Last 365 Days {event.title()} by Date, {rider} threshold {threshold}")
     # replace <NA> with '' just useful for the print _df statement
-    _df = newdf1.fillna('').infer_objects(copy=False)
+    # deprecated _df = newdf1.fillna('').infer_objects(copy=False)
+    _df = newdf1.fillna('').infer_objects()
     #print(newdf1.fillna('').infer_objects(copy=False))
 
     # omit Year if the field exists before listing/printing the df
@@ -776,7 +777,9 @@ def unique_route_report(df, event):
         #print(_newdf)
         #print(_newdf.fillna(''))
         #print(_newdf.fillna('').infer_objects(copy=False))
-        _df = _newdf.fillna('').infer_objects(copy=False)
+        
+        # deprecated _df = _newdf.fillna('').infer_objects(copy=False)
+        _df = _newdf.fillna('').infer_objects()
 
         # how many rows in _df
         num_rows = len(_df)
