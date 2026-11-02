@@ -1,0 +1,12 @@
+### events
+#pat_events
+john_events
+descr_report
+### weight
+weight_report
+### year to date report
+year_to_date_report
+year_month_grid_report
+### year-month totals and year totals
+year_month_report
+#year_week_report

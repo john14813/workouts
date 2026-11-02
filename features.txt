@@ -1,0 +1,143 @@
+other ideas may 2025
+workouts.py program- think about columns for peak/vigorous/moderate/light heart rate percentages, plus avg and cardio load
+
+workouts
+- ADD running 2-week total miles?
+	- would need to add that as a field and add it as we go through the rows
+	- maybe a dict with unixdate/bike miles and get members wiht date greater than now -14 
+	- how to display it?
+- break out temperature and wind columns
+	- - split- in the ODS
+	- - not sure about splitting in the csv
+	- 	- it would give the ability to compute avg temp, avg wind
+	- 	- get the py program to consider the break-out
+- workouts weight rpt- first, last time, 2nd to last time 🙂
+- METs-METs-minutes
+	https://x.com/i/grok/share/6b2f00203bdc48c5a0e84e95748e6f49
+	workouts: if i add watts, I can compute METs data for each event as well as monthly totals
+	htc 23.2 ride using avg watts
+	METs ≈ (Average Watts ÷ Body Weight in kg) ÷ 0.23
+	155 watts, weight 168 lb (76.36) == 8.82 METS
+	but you want mets-minutes, so * 91 min = 803 mets minutes 
+
+	walking- Average METs = Calories ÷ (Weight in kg × Duration in hours). 
+	340 calories
+	167lb= 75.91 kg
+	37:25== .6236 hr
+	Average intensity: 7.20 METs — still a strong brisk/vigorous walk.
+	==6.52 mets, 270 mets minutes
+
+
+
+
+set up venv venv
+set up a.bat, d.bat
+install pandas
+upgrade pip
+
+list:
+Package         Version
+--------------- ------------
+numpy           1.26.0
+pandas          2.1.1
+pip             23.2.1
+python-dateutil 2.8.2
+pytz            2023.3.post1
+setuptools      65.5.0
+six             1.16.0
+tzdata          2023.3
+
+- read through data and create a dataframe
+- create an event assigner
+
+~~~~~~~~~~~~~~~~~~~
+need a date to mo/day/year functions
+Sun 09/17/23- convert to a python date and then use those funcs to get stuff?
+https://pandas.pydata.org/docs/reference/api/pandas.DatetimeIndex.date.html#pandas.DatetimeIndex.date
+convert date string to a python date?
+https://docs.python.org/3/library/datetime.html
+
+class datetime.date(year, month, day)
+All arguments are required. Arguments must be integers, in the following ranges:
+MINYEAR <= year <= MAXYEAR
+1 <= month <= 12
+1 <= day <= number of days in the given month and year
+
+~~~~~~~~
+csv
+- macro to save history as csv
+	- if i convert the day to day results as a csv, then i'd have to use the program to total up stuff i do in the spreadsheet night
+- totals by "filter"
+	- "event"- run/walk, ride, ride w others
+	- month
+	- month-year
+	- year
+	- route
+	- also filter by miles to break down riding/walking
+- create a class to put numbers into- provide count, total, avg, max/min with functions
+- monthly and annual totals
+- year to date miles comparison
+- projection totals for month/year
+- max rate of year to date
+
+
+
+print(df.sum())
+print(df.count())
+print(df.loc["Mary", "age"])
+
+https://www.w3schools.com/python/pandas/pandas_ref_dataframe.asp 
+
+- feb 2025
+	- add "gym" activities- feb 2025
+		- mph- make it 1 decimal place, not 2. 
+		- descr-- gym 2501 (or whatever) for the workout code
+			- 2501 -- the first plan for 2025. next will be 2502, etc.
+			- saved in evernote
+		= created WORKOUT_EVENTS and MOVING_EVENTS to make reporting easier
+		- add gym to bike, walk in john_events
+		- added to data_rpt
+		- added to standard_rpt
+		- added to ytd_total_rpt
+		- added to totals_report
+		- added to event_report
+		- added to unique_route_report
+	- utility.py
+		- added to get_event
+		- added to get_num_workout_days
+	- summary
+		- track 2 gym events per week
+	- enhancement- also show last event at top of output to make searching easier
+- sep 2025
+	- totals_report()- add median cardio load
+	- check for empty array before doing cardio load mean
+	- switch all mean() calls to median() instead
+	- take out the "weekly" report (run_suite.txt)
+
+- july 2026
+	- added grid report
+
+aug 2026
+	- added Year to bike df for totals_report, can show totals for each year
+
+sep 2026
+	- added quintile for data reports
+	- added FB_R (readiness)
+	- added FB_HRV_NEXT column next to FB_R
+
+oct 2026
+	- totals_report added VAMi, Mph, total time. 
+	- iterate through years in reverse order
+	- correct the year_month_grid_report. had a rounding error due to converting to int too 
+		early in the routine. 
+	- tune up the totals_report()- use 25/50/75 for items
+	- added feature to show column titles for long listings of events for:
+		unique_route_report() 
+		event_report()
+	- added config.py, workouts.config for configurable items
+	- clean up 14_month_summary rpt now use RPT_YEARS
+		years_to_report_summary()
+		year_month_report()
+		year_to_date_report()
+		weight_report()
+	- added descr_report() to show data for individual rides year by year

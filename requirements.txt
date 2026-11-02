@@ -1,0 +1,5 @@
+loguru
+matplotlib
+pandas
+pylint
+tabulate

@@ -1,0 +1,44 @@
+    #Data columns (total 33 columns):
+    #   Column         Non-Null Count  Dtype  
+    #---  ------         --------------  -----  
+    # 0   Year           4975 non-null   int64  
+    # 1   Month          4975 non-null   int64  
+    # 2   Day            4975 non-null   int64  
+    # 3   Time_Tot       4258 non-null   object 
+    # 4   Time_Asc       709 non-null    object 
+    # 5   Time_Desc      709 non-null    object 
+    # 6   Time_Stop      794 non-null    object 
+    # 7   Laps           2987 non-null   float64
+    # 8   Weather        179 non-null    object 
+    # 9   Miles          4965 non-null   float64
+    # 10  Elev           1492 non-null   float64
+    # 11  Cal            1063 non-null   float64
+    # 12  VAM            781 non-null    float64
+    # 13  Wt             4392 non-null   object 
+    # 14  Descr          4293 non-null   object 
+    # 15  Pat            258 non-null    object 
+    # 16  Date_year      4975 non-null   object 
+    # 17  Date_month     4975 non-null   object 
+    # 18  Date_dom       4975 non-null   object 
+    # 19  Date_doy       4975 non-null   object 
+    # 20  Date           4975 non-null   object 
+    # 21  Date_unixdays  4975 non-null   float64
+    # 22  VAMi        781 non-null    object 
+    # 23  Event          4975 non-null   object 
+    # 24  Time_Tot_Min   4975 non-null   float64
+    # 25  Rest_60_Min    794 non-null    object 
+    # 26  Mph            4965 non-null   float64
+    # 27  Grade          1492 non-null   float64
+    # 28  Sec_per_lap    2151 non-null   float64
+    # 29  Time_Asc_Min   717 non-null    float64
+    # 30  Time_Desc_Min  717 non-null    float64
+    # 31  Asc_Desc       709 non-null    object 
+    # 32  Time_Stop_Min  794 non-null    float64
+    #dtypes: float64(13), int64(3), object(17)
+    #None
+    #count 4970
+
+    #    quick exit
+    # requires jinja2
+    #print (df.style)
+    #sys.exit()
