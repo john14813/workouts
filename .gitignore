@@ -1,14 +1,5 @@
 .idea
-"*.lnk"
-"edit_workouts - Shortcut.lnk"
-"gitbrave - Shortcut.lnk"
-"maintenance - Shortcut.lnk"
-"openworkouts - Shortcut.lnk"
-"run - Shortcut.lnk"
-"sw - Shortcut.lnk"
-"workouts - Shortcut.lnk"
-"workouts.txt - Shortcut.lnk"
-
+*.lnk
 .vscode/
 __pycache__
 venv/
