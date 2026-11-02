@@ -1,0 +1,1 @@
+"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe" https://github.com/john14813/workouts/tree/main
