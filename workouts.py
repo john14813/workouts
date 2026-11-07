@@ -115,7 +115,9 @@ def get_maint_event_data():
     '''
     # open the file using "with"
     # statement
-    retval = {}
+    #retval = {} # old way- dict
+    retval = [] # new way- list
+
     maint_file = "maintenance.csv"
     with open(maint_file, 'r', encoding='utf-8') as data:
         for line in reader(data):
@@ -131,8 +133,19 @@ def get_maint_event_data():
                     int(line[1]),
                     int(line[2]),
                     int(line[3])))
-            # assign to dict
-            retval[line[0]] = unix_days
+
+            # original behavior- one entry per event type
+            # assign to retval dict
+            ###retval[line[0]] = unix_days
+
+            # new behavior- one event per every event instance
+            # reval is now a list
+            maint_event = {
+                'event': line[0],
+                'date': unix_days
+            }
+            retval.append(maint_event)
+
             #print(line)
         #print (retval)
     return retval
@@ -1579,19 +1592,104 @@ def interval_report(newdf):
         print("Expected Gym Days so far this "
               f"{_entity.title()}: {num_days[1]}")
 
-    # maintenance report
-    day_of_now = convert_date_to_unixdays(datetime.datetime.now())
-    print("")
 
+@measure_time
+def maintenance_report(newdf):
+    '''
+    report on maintenance events
+    '''
+    print("")
+    print("maintenance_report()")
+    heading = "Date       Days Miles"
+    #          2024/09/20    8   102
+
+    day_of_now = convert_date_to_unixdays(datetime.datetime.now())
+
+    # read maint events from csv file
+    # it is a list of dict
     maint_events = get_maint_event_data()
 
-    print("Maintenance Report")
-    for k, v in maint_events.items():
-        # compute interval from maint event to now
-        _interval = day_of_now - v
-        print(f"Since Last {k}")
-        standard_rpt(newdf, None, interval=_interval)
-        print("")
+    # maint_events is a list
+    # sort by 'event' and then by date
+    sorted_maint_events = sorted(
+        maint_events,
+        key=lambda d: (d["event"], d['date'])
+        )
+
+    # report on the data
+    current_event = ''
+    early_date = 0
+    late_date = 0
+    first_pass = True
+    for _me in sorted_maint_events:
+        #print(_me)
+
+        # 1st record in this list is a special case
+        # we don't want to report anything
+        # but we want to get the event and date for the next pass
+        if first_pass:
+            early_date = _me['date']
+            current_event = _me['event']
+            first_pass = False
+
+            # heading for first event
+            print(f"{current_event}")
+            print(heading)
+            continue
+
+        # existing event
+        if _me['event'] == current_event:
+            late_date = _me['date']
+            maintenance_rpt(newdf, early_date, late_date, day_of_now)
+
+        # new event
+        else:
+            # report on last event to the present day
+            late_date = day_of_now
+            maintenance_rpt(newdf, early_date, late_date, day_of_now)
+
+            # blank line
+            print()
+            print(f"{_me['event']}")
+            print(heading)
+
+            # nothing to report for the 1st record of a new event
+
+        # prepare for the next pass on the new event
+        current_event = _me['event']
+        early_date = _me['date']
+
+    # will have one more line to do for the last event after exiting loop
+    #print("last line after loop")
+    late_date = day_of_now
+    maintenance_rpt(newdf, early_date, late_date, day_of_now)
+
+
+def maintenance_rpt(df, date1, date2, day_of_now):
+    '''
+    df is df to draw data from
+    date1 is the earliest date
+    date2 is the later date
+    report number of days and miles in the df for that interval
+    '''
+    #print(date1, date2)
+
+    # get df to look match the date fields
+    filtered_df = df[(df["Date_unixdays"] > date1) &
+              (df["Date_unixdays"] < date2)]
+
+    # total number of miles
+    total_miles = filtered_df["Miles"].sum()
+    number_of_days = date2 - date1
+    last_date = filtered_df["Date"].max()
+
+    # if date2 is current, use slightly different output
+    # widths match the size of the heading
+    if date2 != day_of_now:
+        print(f"{last_date:<12} {number_of_days:4d} {total_miles:5.0f}")
+    else:
+        print(f"{"current":<12} {number_of_days:4d} {total_miles:5.0f}")
+
 
 
 def main():
@@ -1680,6 +1778,8 @@ def main():
 
     newdf = years_to_report_summary(df)
     interval_report(newdf)
+
+    maintenance_report(newdf)
 
     counter_report(timer_counter, "Timer Report")
 

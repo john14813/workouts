@@ -141,3 +141,7 @@ oct 2026
 		year_to_date_report()
 		weight_report()
 	- added descr_report() to show data for individual rides year by year
+
+nov 2026
+	- upgraded python to 3.15.2. rebuilt venv accordingly.
+	- enhanced maintenance_report() to show all maintenance events, not just the latest
